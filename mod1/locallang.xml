@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;tools_txevonginxboostM1&quot;</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="title">Evo Nginx Boost</label>
+			<label index="statistics">Statistics</label>
+			<label index="version">version</label>
+			<label index="refresh">Refresh</label>
+			<label index="connect_error">Could not connect to memcache server!</label>
+			<label index="reset">Reset</label>
+			<label index="default">Default</label>
+			<label index="malloc">Malloc</label>
+			<label index="maps">Maps</label>
+			<label index="cachedump">Cachedump</label>
+			<label index="slabs">Slabs</label>
+			<label index="items">Items</label>
+			<label index="sizes">Sizes</label>
+			<label index="servers">Servers</label>
+			<label index="delete_selected">Delete selected key's</label>
+			<label index="clear_user_cache">Clear user memcache</label>
+			<label index="clear_for_user">Clear memcache for user: </label>
+			<label index="clear_for_table">Clear memcache for page: </label>
+			<label index="no_user">User not found!</label>
+			<label index="no_table">Table not found!</label>
+			<label index="select_all">(+) Select all</label>
+			<label index="deselect_all">(-) Select none</label>
+		</languageKey>
+	</data>
+</T3locallang>
