@@ -1,0 +1,63 @@
+# cat=basic; cat=basic; type=string; label=Enable or disable memcaching
+enable = 1
+
+# cat=basic; type=string; label=Set default memcache expiration time in seconds (has priority over TYPO3 setting)
+forceTimeoutToAllPages = 0
+
+# cat=basic; type=string; label=Set logged USER memcache expiration time in seconds (has priority over TYPO3 setting)
+forceTimeoutToLoggedUsers = 0
+
+# cat=basic; type=string; label=Add memcache signature at the end of output
+memcacheSignature = 1
+
+# cat=basic; type=string; label=Define signature string. If empty default signature is added
+memcacheSignatureText =
+
+# cat=basic; type=string; label=Memcached will be cleaned if we hit Clear all cache or Clear page content cache
+cleanOnClearAllCache = 1
+
+# cat=basic; type=string; label=Disable cache for logged users
+disableCacheForLoogedUsers = 0
+
+# cat=basic; type=string; label=Main memcache server IP
+_mainServerIP = 192.168.168.3
+
+# cat=basic; type=string; label=Main memcache server port
+_mainServerPort = 11211
+
+# cat=basic; type=string; label=Main memcache server persistent connection
+_mainServerPersistent = 1
+
+# cat=basic; type=string; label=Main memcache server connection timeout
+_mainServerTimeout = 1
+
+# cat=basic; type=string; label=Cleanup modules allow from IP (comma separated list or '*' to allow all - not recommendet): ADVANCED!
+cleanupAllowedFromIP = *
+
+# cat=basic; type=string; label=Garbage Collector Probability in percent (ie: 0.01%)
+garbageCollectorProbability = 1.0
+
+# cat=basic; type=string; label=Use if you are using localhost memcache server
+onlyLocalhost = 0
+
+# cat=basic; type=string; label=Extend TYPO3 files to use this plugin without NGINX server
+extendTypo3indexphp = 0
+
+# cat=basic; type=string; label=Add html anchor with id 'tx_evoenginxboost_cached_page'. It allow JS to discern that page is cached or not.
+addCachedAnchorFlag = 0
+
+# cat=basic; type=string; label=Debug on
+debug = 0
+
+# cat=basic; type=string; label=Debug allowed IP (comma separated list or '*' to allow all - not recommendet)
+debugAllowedIP = *
+
+# cat=basic; type=string; label=Write only error messages
+debugOnlyErrorsLogging = 1
+
+# cat=basic; type=string; label=Write messages to database (table log_evonginxboost must exists)
+debugWriteToDB = 1
+
+# cat=basic; type=string; label=Write messages on browser output
+debugWriteToOutput = 0
+

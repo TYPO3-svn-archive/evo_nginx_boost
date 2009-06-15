@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'evo_nginx_boost'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="pages.tx_evonginxboost_nocache">Disable page memcache</label>
+			<label index="pages.tx_evonginxboost_user_timeout">Logged user memcache timeout</label>
+			<label index="pages.tx_evonginxboost_guest_timeout">Guest memcache timeout</label>
+			<label index="pages.timeout.I.-3">GLOBAL PAGE (same content as guest)</label>
+			<label index="pages.timeout.I.-2">Typo3 settings</label>
+			<label index="pages.timeout.I.-1">Forever</label>
+			<label index="pages.timeout.I.0">Disable memcache</label>
+			<label index="pages.timeout.I.30">30 sec</label>
+			<label index="pages.timeout.I.60">60 sec</label>
+			<label index="pages.timeout.I.120">2 min</label>
+			<label index="pages.timeout.I.180">3 min</label>
+			<label index="pages.timeout.I.240">4 min</label>
+			<label index="pages.timeout.I.300">5 min</label>
+			<label index="pages.timeout.I.600">10 min</label>
+			<label index="pages.timeout.I.1800">30 min</label>
+			<label index="pages.timeout.I.3600">60 min</label>
+			<label index="pages.timeout.I.7200">2 h</label>
+			<label index="pages.timeout.I.43200">12 h</label>
+			<label index="pages.timeout.I.86400">24 h</label>
+			<label index="pages.timeout.I.172800">2 days</label>
+			<label index="pages.timeout.I.259200">3 days</label>
+			<label index="pages.timeout.I.604800">7 days</label>
+			<label index="pages.timeout.I.1209600">14 days</label>
+			<label index="pages.timeout.I.2678400">1 month</label>
+			<label index="pages.timeout.I.5270400">2 months</label>
+			<label index="pages.timeout.I.15768000">6 months</label>
+			<label index="pages.timeout.I.31536000">1 year</label>
+		</languageKey>
+	</data>
+</T3locallang>
