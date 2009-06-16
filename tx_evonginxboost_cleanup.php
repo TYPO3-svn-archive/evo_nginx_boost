@@ -7,7 +7,7 @@ if ($evo_nginx_boost->checkCleanPermission($_SERVER['REMOTE_ADDR']))
 	echo 'NGINX BOOST CLEANUP...';
 	tslib_eidtools::connectDB();
 	$stat = $evo_nginx_boost->garbageCollector(true);
-	mail('pawel.len@gmail.com', 'GC - poszło', print_r($stat, 1));
+	//mail('pawel.len@gmail.com', 'GC - poszło', print_r($stat, 1));
 	die(' ok.');
 }
 else
