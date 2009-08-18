@@ -213,10 +213,12 @@ class tx_evo_nginx_boost
 	 * @param <type> $limit			Used in conjunction with type  set to cachedump to limit the number of entries to dump. Default value is 100.
 	 * @return <mixed>				Tablica statystyk lub false w przypadku niepowodzenia
 	 */
-	public function getServersStatistics($type = null, $slabid = null, $limit = 100)
-	{
-		return $this->connected>0 ? $this->memcache->getExtendedStats($type, $slabid, $limit) : false;
-	}
+    public function getServersStatistics($type = null, $slabid = null, $limit = 100)
+    {
+        if ($this->connected > 0)   // patch (c) 2009 by Veit Nachtmann, veit@nachtmann.it //$type cannot be null or the lib (>3.x) will throw an error. simple workaround.
+            return is_null($type) ? $this->memcache->getExtendedStats() : $this->memcache->getExtendedStats($type, $slabid, $limit);
+        return false;
+    }
 
 	/**
 	 * Retrives server version.
