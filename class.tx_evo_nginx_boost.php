@@ -436,8 +436,8 @@ class tx_evo_nginx_boost
 	 */
 	private function generateSesKey($domainPrefix = true)
 	{
-		$rUri = ($domainPrefix ? $this->generateDomain() : '').$this->generateRequestUri();
-		return ($this->isLoggedUser()<1 || $this->globalPage) ? $rUri : $rUri.':='.$this->getUserLoggedCookieValue();
+		$rUri = ($domainPrefix ? $this->generateDomain() : '').$this->generateRequestUri().':=';
+		return ($this->isLoggedUser()<1 || $this->globalPage) ? $rUri : $rUri.$this->getUserLoggedCookieValue();
 	}
 
 	/**
