@@ -197,9 +197,9 @@ class tx_evo_nginx_boost
 	{
 		if ($this->memcacheEnabled() && !$pObj->page['tx_evonginxboost_nocache'])
 		{
-			$this->userLoggedCookie($this->isLoggedUser(false), $pObj->fe_user->lifetime>0 ? time()+$pObj->fe_user->lifetime : 0);
+			$this->userLoggedCookie($this->isLoggebdUser(false), $pObj->fe_user->lifetime>0 ? time()+$pObj->fe_user->lifetime : 0);
 			if ($this->checkPOST() && $this->reConnect() && !$this->checkIfIsNoClearCachePost())
-				$this->clearPageCache($pObj->id);
+				$this->clearPageCache($pObj->id); 
 			if ($this->isBeTypoUser())
 				$this->debug('BE User cookie detected! OK.');
 		}
