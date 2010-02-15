@@ -1,5 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) 	die ('Access denied.');if(!isset($_GET['eID'])) {
+if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 if (TYPO3_MODE == 'BE')	{
 	t3lib_extMgm::addModule('tools','txevonginxboostM1','',t3lib_extMgm::extPath($_EXTKEY).'mod1/');
@@ -96,4 +96,4 @@ foreach ($TCA['pages']['palettes'] as &$pallete)
 	$pallete['showitem'] = str_replace('cache_timeout', 'cache_timeout,tx_evonginxboost_nocache,tx_evonginxboost_user_timeout,tx_evonginxboost_guest_timeout', $pallete['showitem']);
 //t3lib_extMgm::addToAllTCAtypes("pages", "tx_evonginxboost_nocache", '','after:nav_hide');//cache_timeout
 
-}?>
+?>

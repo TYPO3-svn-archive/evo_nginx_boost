@@ -76,14 +76,16 @@ class tx_evo_nginx_boost
 	 */
 	private function getUserLoggedCookieValue()
 	{
-		return $_COOKIE['fe_typo_user'].'_'.$this->isLoggedUser(false);
+		return $_COOKIE['fe_typo_user'].'_'.$this->isLoggedUser(true);
 	}
 
 	public function forceLoggedUserUsingCookies()
 	{
 		if (isset($_COOKIE['nginx_boost_fe_user']))
 		{
-			list($hash, $uid) = explode('_', $_COOKIE['nginx_boost_fe_user']);
+			$a = explode('_', $_COOKIE['nginx_boost_fe_user']);
+			if (isset($a[1])) $uid = $a[1];
+			if (isset($a[0])) $hash = $a[0];
 			if ($hash==$_COOKIE['fe_typo_user'] && ($uid = intval($uid))>0)
 				return $uid;
 		}
@@ -97,7 +99,7 @@ class tx_evo_nginx_boost
 	 */
 	private function isLoggedUser($forceUsingCookies = true)
 	{
-		if (($user_uid = intval($GLOBALS['TSFE']->fe_user->user['uid']))>0)
+		if (isset($GLOBALS['TSFE']) && ($user_uid = intval($GLOBALS['TSFE']->fe_user->user['uid']))>0)
 			return $user_uid;
 		elseif ($forceUsingCookies)
 			return $this->forceLoggedUserUsingCookies();
@@ -133,6 +135,22 @@ class tx_evo_nginx_boost
 		}
 	}
 
+	public function clearUrlPrefixCache($url = false)
+	{
+		if (!$url)
+			$url = $this->generateSesKey(false);
+		$this->removeCacheHistory('url_prefix', $url);
+		$this->debug('Clear UrlPrefix cache [url-prefix: '.$url.'] OK.');
+	}
+
+	public function clearUrlCache($url = false)
+	{
+		if (!$url)
+			$url = $this->generateSesKey(false);
+		$this->removeCacheHistory('key', $url);
+		$this->debug('Clear Url cache [key: '.$url.'] OK.');
+	}
+
 	/**
 	 * Make connection and save content (tslib_fe -> content) in memcache.
 	 * If POST is sent or timeout = 0  connection is not made.
@@ -162,7 +180,8 @@ class tx_evo_nginx_boost
 
 	public function load($key = false, $returnOnly = false)
 	{
-		if ($this->memcacheEnabled() && !$this->isBeTypoUser() && (!is_array($_POST) || count($_POST)<1) && !($this->conf['disableCacheForLoogedUsers'] && $this->isLoggedUser()) && !$this->checkIfIsExcludedUrl())
+		//echo $this->generateSesKey(true);
+		if ($this->memcacheEnabled() && !$this->isBeTypoUser() && !$this->checkPOST() && !($this->conf['disableCacheForLoogedUsers'] && $this->isLoggedUser()) && !$this->checkIfIsExcludedUrl())
 			if ($this->reConnect() && ($data=$this->memcache->get($key ? $key : $this->generateSesKey(true)))!==false)
 			{
 				if ($returnOnly)
@@ -197,9 +216,16 @@ class tx_evo_nginx_boost
 	{
 		if ($this->memcacheEnabled() && !$pObj->page['tx_evonginxboost_nocache'])
 		{
-			$this->userLoggedCookie($this->isLoggebdUser(false), $pObj->fe_user->lifetime>0 ? time()+$pObj->fe_user->lifetime : 0);
+			$this->userLoggedCookie($this->isLoggedUser(false), $pObj->fe_user->lifetime>0 ? time()+$pObj->fe_user->lifetime : 0);
 			if ($this->checkPOST() && $this->reConnect() && !$this->checkIfIsNoClearCachePost())
-				$this->clearPageCache($pObj->id); 
+			{
+				if ($this->conf['useUrlPrefixClear']==2)
+					$this->clearUrlPrefixCache();
+				elseif ($this->conf['useUrlPrefixClear']==1)
+					$this->clearUrlCache();
+				else
+					$this->clearPageCache($pObj->id);
+			}
 			if ($this->isBeTypoUser())
 				$this->debug('BE User cookie detected! OK.');
 		}
@@ -411,7 +437,7 @@ class tx_evo_nginx_boost
 	private function generateSesKey($domainPrefix = true)
 	{
 		$rUri = ($domainPrefix ? $this->generateDomain() : '').$this->generateRequestUri();
-		return ($this->isLoggedUser()<1 || $this->globalPage) ? $rUri : $rUri.$this->getUserLoggedCookieValue();
+		return ($this->isLoggedUser()<1 || $this->globalPage) ? $rUri : $rUri.':='.$this->getUserLoggedCookieValue();
 	}
 
 	/**
@@ -515,7 +541,7 @@ class tx_evo_nginx_boost
 			elseif ($removeBy=='page')
 				$where = 'page_uid='.intval($value);
 			elseif ($removeBy=='key')
-				$where = 'request_uri=\''.addslashes($value).'\'';
+				$where = 'request_uri=\''.addslashes($value).':=%\'';
 			elseif ($removeBy=='url_prefix')
 				$where = 'request_uri LIKE \''.addslashes($value).'%\'';
 			elseif ($removeBy=='tags' && is_array($value))
@@ -571,7 +597,7 @@ class tx_evo_nginx_boost
 		$p = floatval(rand(0, 10000000)/100000.0);
 		if ((floatval($this->conf['garbageCollectorProbability'])>=$p))
 		{
-			$host = $_SERVER["SERVER_NAME"];
+			$host = $_SERVER["SERVER_ADDR"];
 			$port = 80;
 			$this->debug('Running Garbage Collector [host: "'.$host.'", port: "'.$port.'"] OK.');
 			if ($f = fsockopen($host, $port, $errno, $errstr))
@@ -620,8 +646,8 @@ class tx_evo_nginx_boost
 			return false;
 		if ($this->isBeTypoUser() || $this->conf['debugAllowedIP']=='*' || in_array((string)$_SERVER['REMOTE_ADDR'], t3lib_div::trimExplode(',', $this->conf['debugAllowedIP'])))
 		{
-			session_start();
-			if (!is_array($GLOBALS['_debug_tx_evonginxboost']))
+			//session_start();
+			if (!isset($GLOBALS['_debug_tx_evonginxboost']) || !is_array($GLOBALS['_debug_tx_evonginxboost']))
 				$GLOBALS['_debug_tx_evonginxboost'] = array(array('START', 'debug session start at: '.date('d-m-Y H:i:s', time())));
 			$GLOBALS['_debug_tx_evonginxboost'][] = array($type, $msg);
 			if ($writeOutput)

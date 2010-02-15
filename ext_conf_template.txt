@@ -46,6 +46,9 @@ extendTypo3indexphp = 0
 # cat=basic; type=string; label=Add html anchor with id 'tx_evoenginxboost_cached_page'. It allow JS to discern that page is cached or not.
 addCachedAnchorFlag = 0
 
+# cat=basic; type=string; label=Clear Cache after POST request using URL prefix insted of page ID
+useUrlPrefixClear = 0
+
 # cat=basic; type=string; label=Debug on
 debug = 0
 

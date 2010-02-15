@@ -17,6 +17,7 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['urlHashGuard'] = trim($_EXTCON
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['onlyLocalhost'] = trim($_EXTCONF['onlyLocalhost']);
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['extendTypo3indexphp'] = trim($_EXTCONF['extendTypo3indexphp']);
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['addCachedAnchorFlag'] = trim($_EXTCONF['addCachedAnchorFlag']);
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['useUrlPrefixClear'] = trim($_EXTCONF['useUrlPrefixClear']);
 //debug options:
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['debug'] = trim($_EXTCONF['debug']);
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['debugAllowedIP'] = trim($_EXTCONF['debugAllowedIP']);
