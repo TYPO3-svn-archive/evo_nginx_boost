@@ -600,7 +600,7 @@ class tx_evo_nginx_boost
 			$host = $_SERVER["SERVER_ADDR"];
 			$port = 80;
 			$this->debug('Running Garbage Collector [host: "'.$host.'", port: "'.$port.'"] OK.');
-			if ($f = fsockopen($host, $port, $errno, $errstr))
+			if ($f = @fsockopen($host, $port, $errno, $errstr))
 			{
 				stream_set_blocking($f, 0);
 				$data = "postRequest=true";
