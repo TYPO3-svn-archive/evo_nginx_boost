@@ -541,7 +541,7 @@ class tx_evo_nginx_boost
 			elseif ($removeBy=='page')
 				$where = 'page_uid='.intval($value);
 			elseif ($removeBy=='key')
-				$where = 'request_uri=\''.addslashes($value).':=%\'';
+				$where = 'request_uri LIKE \''.addslashes($value).':=%\'';
 			elseif ($removeBy=='url_prefix')
 				$where = 'request_uri LIKE \''.addslashes($value).'%\'';
 			elseif ($removeBy=='tags' && is_array($value))
